@@ -15,9 +15,7 @@ const SongForm = ({
 }) => {
   const handleRemoveClick = (e) => {
     remove(e, index);
-    
   };
-  
 
   return (
     <div className="flex flex-row gap-20 pl-10 border p-4 rounded-xl">
@@ -33,15 +31,7 @@ const SongForm = ({
           onChange={(e) => handleChange(e, index)}
           value={song.Title}
         />
-        {/* <div className="">
-          <label>Title</label>
-          <input
-            onChange={(e) => handleChange(e, index)}
-            name={`Title`}
-            type="text"
-            value={song.Title}
-          />
-        </div> */}
+
         <FormInput
           classNames={""}
           type={"text"}
@@ -58,27 +48,11 @@ const SongForm = ({
           songFile={songFile}
         />
 
-        {/* <div>
-          <label>Artists</label>
-          <input
-            onChange={(e) => handleChange(e, index)}
-            name={`Artists`}
-            type="text"
-            value={song.Artists}
-          />
-        </div> */}
-
-        {/* <div>
-          <label>SongFile</label>
-          <input
-            onChange={(e) => handleChange(e, index)}
-            name={`SongFile`}
-            type="text"
-            value={song.SongFile}
-          />
-        </div> */}
-        
-        <FormButton onClick={handleRemoveClick} label={"Remove"} />
+        <FormButton
+          onClick={handleRemoveClick}
+          label={"Remove"}
+          classNames="bg-red-500"
+        />
       </div>
     </div>
   );

@@ -7,8 +7,9 @@ import FormButton from "../Components/FormButton";
 import FormFileInput from "../Components/FormFileInput";
 import ShowErrors from "../Components/ShowErrors";
 import PreviewSong from "../Components/PreviewSong";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function CreateAlbum() {
+const CreateAlbum = () => {
   const [formValues, setFormValues] = useState({
     Artist: "",
     Title: "",
@@ -19,6 +20,8 @@ function CreateAlbum() {
       },
     ],
   });
+
+  const navigate = useNavigate();
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
@@ -54,6 +57,8 @@ function CreateAlbum() {
     });
     try {
       const res = await axios.post("/album", formData);
+      setErrors([]);
+      navigate("/");
     } catch (error) {
       setErrors(error.response.data.errors);
     }
@@ -126,26 +131,15 @@ function CreateAlbum() {
               value={formValues.Title}
             />
 
-            {/* <div>
-              <label className="flex flex-col items-center justify-center gap-1">
-                AlbumImage
-              </label>
-              <input
-                onChange={handleFileChange}
-                name="AlbumImage"
-                type="file"
-              /> */}
             <FormFileInput
               label={"Select File"}
               onChange={handleFileChange}
               selectFile={imageName}
               classNames={""}
             />
-            {imagePreview && ( // Display image preview if available
+            {imagePreview && (
               <div>
-                
                 <img
-                
                   className="object-cover bg-slate-900"
                   src={imagePreview}
                   alt="Preview"
@@ -153,8 +147,6 @@ function CreateAlbum() {
                 />
               </div>
             )}
-
-            {/* </div> */}
 
             <h2 className="text-4xl text-emerald-600">Add Songs</h2>
 
@@ -173,9 +165,6 @@ function CreateAlbum() {
               </>
             ))}
 
-            {/* <button type="button" onClick={handleAddSongs}>
-          Add Songs
-        </button> */}
             <div className="flex flex-row gap-10 ">
               <FormButton
                 onClick={handleAddSongs}
@@ -193,6 +182,6 @@ function CreateAlbum() {
       </div>
     </div>
   );
-}
+};
 
 export default CreateAlbum;
