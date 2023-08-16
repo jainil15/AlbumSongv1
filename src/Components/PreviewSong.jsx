@@ -5,6 +5,7 @@ import {
   faPlay,
   faPause,
   fa4,
+  faStop as faLoader
 } from "@fortawesome/free-solid-svg-icons";
 
 const PreviewSong = ({ previewFile }) => {
@@ -12,6 +13,7 @@ const PreviewSong = ({ previewFile }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [songUrl, setSongUrl] = useState("");
+  const [isAudioLoaded, setIsAudioLoaded] = useState(false);
   const audioRef = useRef(null);
 
   const onPlayPauseClick = () => {
@@ -26,10 +28,17 @@ const PreviewSong = ({ previewFile }) => {
 
   useEffect(() => {
     const audio = audioRef.current;
+
+    audio.addEventListener("loadedmetadata", () => {
+      setTotalTime(audio.duration);
+      setIsAudioLoaded(true);
+    });
+
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("ended", () => setIsPlaying(false));
     audio.addEventListener("loadedmetadata", () => {
       setTotalTime(audio.duration);
+    
     });
 
     return () => {
@@ -53,38 +62,39 @@ const PreviewSong = ({ previewFile }) => {
     <>
       <div className="bg-teal-900 p-4 flex flex-col gap-0 rounded-xl items-start justify-start bg-opacity-80 w-96">
         <div className="flex flex-row items-center justify-evenly">
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-          className="pt-2 pr-2 pb-2"
-        >
-          <FontAwesomeIcon
-            icon={isPlaying ? faPause : faPlay}
-            size="2x"
-            onClick={onPlayPauseClick}
-          />
-        </button>
-        <span>
-          {`${Math.floor(currentTime / 60)}:${String(
-            Math.floor(currentTime % 60)
-          ).padStart(2, "0")}`}
-          /{" "}
-          {`${Math.floor(totalTime / 60)}:${String(
-            Math.floor(totalTime % 60)
-          ).padStart(2, "0")}`}
-          <audio
-          src={previewFile}
-          ref={audioRef}
-          onTimeUpdate={handleTimeUpdate}
-          onEnded={() => {
-            setIsPlaying(false);
-          }}
-        ></audio>
-        </span>
-        
-        
-        
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+            className="pt-2 pr-2 pb-2"
+          >
+            {isAudioLoaded ?<FontAwesomeIcon
+              icon={isPlaying ? faPause : faPlay}
+              size="2x"
+              onClick={onPlayPauseClick}
+            /> : <FontAwesomeIcon
+            icon={faLoader}
+            size="2x" />
+             }
+            
+          </button>
+          <span>
+            {`${Math.floor(currentTime / 60)}:${String(
+              Math.floor(currentTime % 60)
+            ).padStart(2, "0")}`}
+            /{" "}
+            {`${Math.floor(totalTime / 60)}:${String(
+              Math.floor(totalTime % 60)
+            ).padStart(2, "0")}`}
+            <audio
+              src={previewFile}
+              ref={audioRef}
+              onTimeUpdate={handleTimeUpdate}
+              onEnded={() => {
+                setIsPlaying(false);
+              }}
+            ></audio>
+          </span>
         </div>
         <input
           type="range"
@@ -94,11 +104,10 @@ const PreviewSong = ({ previewFile }) => {
           onChange={(e) => handleSeek(e.target.value)}
           className="w-full opacity-0 relative z-10"
           style={{
-            top: "16.5px"
+            top: "16.5px",
           }}
-          
         />
-        <div className=" bg-black h-1 rounded-full w-full" >
+        <div className=" bg-black h-1 rounded-full w-full">
           <div
             className="rounded-full h-1 bg-blue-400 relative flex items-center "
             style={{
@@ -114,13 +123,10 @@ const PreviewSong = ({ previewFile }) => {
                 transition: "transform 1s linear",
                 width: "1.2rem",
                 height: "1.2rem",
-                
-                
               }}
             ></div>
           </div>
         </div>
-        
       </div>
     </>
   );

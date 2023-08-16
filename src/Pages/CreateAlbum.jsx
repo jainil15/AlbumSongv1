@@ -105,7 +105,7 @@ const CreateAlbum = () => {
   };
 
   return (
-    <div className="bg-slate-950 text-white flex flex-col justify-center items-center gap-1 p-10 border">
+    <div className="bg-slate-950 text-white flex flex-col justify-center items-center gap-1 p-10">
       <h1 className="text-6xl flex flex-col items-center justify-center">
         Add Album
       </h1>
