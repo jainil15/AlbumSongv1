@@ -3,3 +3,36 @@
 @tailwind utilities;
 @tailwind variants;
 
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  outline: none;
+}
+
+/* .slider {
+  
+  width: 100%;
+  
+} */
+
+.slider::-moz-range-thumb {
+  outline: none;
+  border: none;
+  width: 14px; /* Set a specific slider handle width */
+  height: 4px; /* Slider handle height */
+  background: rgb(0, 137, 255); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  transition: 0.2s;
+  
+  
+}
+
+.slider::-moz-range-thumb:hover {
+  width: 14px; /* Set a specific slider handle width */
+  height: 14px;
+  border: 100%;
+
+}

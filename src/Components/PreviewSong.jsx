@@ -5,10 +5,10 @@ import {
   faPlay,
   faPause,
   fa4,
-  faStop as faLoader
+  faStop as faLoader,
 } from "@fortawesome/free-solid-svg-icons";
 
-const PreviewSong = ({ previewFile }) => {
+const PreviewSong = ({ previewFile, className = "" }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
@@ -38,7 +38,6 @@ const PreviewSong = ({ previewFile }) => {
     audio.addEventListener("ended", () => setIsPlaying(false));
     audio.addEventListener("loadedmetadata", () => {
       setTotalTime(audio.duration);
-    
     });
 
     return () => {
@@ -60,24 +59,10 @@ const PreviewSong = ({ previewFile }) => {
   };
   return (
     <>
-      <div className="bg-teal-900 p-4 flex flex-col gap-0 rounded-xl items-start justify-start bg-opacity-80 w-96">
+      <div
+        className={`bg-slate-800 p-4 flex flex-col gap-0 rounded-xl items-start justify-start bg-opacity-80 w-96 ${className}`}
+      >
         <div className="flex flex-row items-center justify-evenly">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-            className="pt-2 pr-2 pb-2"
-          >
-            {isAudioLoaded ?<FontAwesomeIcon
-              icon={isPlaying ? faPause : faPlay}
-              size="2x"
-              onClick={onPlayPauseClick}
-            /> : <FontAwesomeIcon
-            icon={faLoader}
-            size="2x" />
-             }
-            
-          </button>
           <span>
             {`${Math.floor(currentTime / 60)}:${String(
               Math.floor(currentTime % 60)
@@ -96,36 +81,31 @@ const PreviewSong = ({ previewFile }) => {
             ></audio>
           </span>
         </div>
+        <div className="w-full flex items-center gap-2 ">
+        <button
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+            className="pt-2 pr-2 pb-2 w-10"
+          >
+            {isAudioLoaded ? (
+              <FontAwesomeIcon
+                icon={isPlaying ? faPause : faPlay}
+                size="2x"
+                onClick={onPlayPauseClick}
+              />
+            ) : (
+              <FontAwesomeIcon icon={faLoader} size="2x" />
+            )}
+          </button>
         <input
           type="range"
           min="0"
           max={totalTime}
           value={currentTime}
           onChange={(e) => handleSeek(e.target.value)}
-          className="w-full opacity-0 relative z-10"
-          style={{
-            top: "16.5px",
-          }}
+          className="w-[100%] h-1 bg-black rounded-md slider"
         />
-        <div className=" bg-black h-1 rounded-full w-full">
-          <div
-            className="rounded-full h-1 bg-blue-400 relative flex items-center "
-            style={{
-              width: `${(currentTime / totalTime) * 100}%`,
-              transition: "transform 1s linear",
-            }}
-          >
-            <div
-              className="bg-white absolute opacity-100 rounded-full border-solid border-2 border-teal-900  "
-              style={{
-                transformY: "translate(-50%)",
-                left: `95%`,
-                transition: "transform 1s linear",
-                width: "1.2rem",
-                height: "1.2rem",
-              }}
-            ></div>
-          </div>
         </div>
       </div>
     </>

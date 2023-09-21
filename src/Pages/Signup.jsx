@@ -37,8 +37,8 @@ const Signup = () => {
     <>
       <nav className="text-2xl text-white">
         <ul>
-          <li>
-            <Link to="/home">Home</Link>
+          <li className="flex items-center w-fit  hover:bg-slate-500 h-full rounded-lg p-2">
+            <Link to="/home" className="">Home</Link>
           </li>
           <li></li>
         </ul>
@@ -50,7 +50,7 @@ const Signup = () => {
         </div> */}
 
         <div className="flex flex-col gap-5 p-10">
-          <h1 className="text-6xl self-center bg-zinc-900 text-zinc-400 w-full h-36 flex items-center justify-center rounded-3xl font-bold">
+          <h1 className="text-6xl self-center bg-zinc-900 text-zinc-400 w-full h-36 flex items-center justify-center rounded-3xl font-bold p-5">
             Sign Up
           </h1>
           <FormInput

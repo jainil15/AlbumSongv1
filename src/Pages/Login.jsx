@@ -15,7 +15,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const onFormChange = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -35,14 +35,14 @@ const Login = () => {
 
   return (
     <>
-      <nav>
+      {/* <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" className="bg-gray-500 p-4 flex w-fit items-center rounded">Home</Link>
           </li>
           <li></li>
         </ul>
-      </nav>
+      </nav> */}
 
       <div className="flex flex-row items-center justify-center h-full">
         {/* <div className="p-20">
@@ -50,7 +50,9 @@ const Login = () => {
         </div> */}
 
         <div className="flex flex-col gap-5 p-10">
-          <h1 className="text-6xl self-center">Login Form</h1>
+        <h1 className="text-6xl self-center bg-zinc-900 text-zinc-400 w-full h-36 flex items-center justify-center rounded-3xl font-bold p-5">
+            Login Form
+          </h1>
           <FormInput
             classNames={""}
             label={"Username: "}
@@ -68,7 +70,7 @@ const Login = () => {
             value={values.Password}
           />
           <div className="flex flex-row items-center justify-evenly">
-            <FormButton label={"Login"} onClick={onLoginClick} />
+            <FormButton label={"Login"} onClick={onLoginClick} classNames="bg-blue-500" />
             <FormButton
               label={"Signup"}
               onClick={(e) => {
