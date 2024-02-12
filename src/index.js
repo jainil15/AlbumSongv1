@@ -4,7 +4,8 @@ import "./styles.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./Context/AuthContext";
-
+//you need change this codede this is bad 
+// give this code to error.panaj and he will siolve 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
